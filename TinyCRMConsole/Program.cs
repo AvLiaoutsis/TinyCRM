@@ -6,8 +6,14 @@ namespace TinyCRMConsole
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
-            Console.WriteLine("Hello world 2!");
+            try
+            {
+                var aLiaoutsis = new Customer("123124125");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"{ex.Message}");
+            }
         }
     }
 }
