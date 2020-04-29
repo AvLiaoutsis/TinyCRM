@@ -8,7 +8,7 @@ namespace TinyCRMConsole
         {
             string startupPath = Environment.CurrentDirectory;
             Console.WriteLine(startupPath);
-            var Products = Product.GetProductsFromCSV(@"Data\Products.csv");
+            var Products = Product.GetProductsFromCSV(@"\Data\Products.csv");
 
             foreach (var product in Products)
             {

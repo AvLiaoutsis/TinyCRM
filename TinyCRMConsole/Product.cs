@@ -19,11 +19,11 @@ namespace TinyCRMConsole
 
         public static List<Product> GetProductsFromCSV(string filename)
         {
-            string path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), filename);
+            var path = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location.Substring(0, Assembly.GetEntryAssembly().Location.IndexOf("bin\\")));
 
             var r = new Random();
 
-            var Data = File.ReadAllLines(path)
+            var Data = File.ReadAllLines(path + filename)
                 .Skip(1)
                 .Select(x => x.Split(';'))
                 .Select(x => new Product
@@ -31,7 +31,7 @@ namespace TinyCRMConsole
                     ProductId = x[0],
                     Name = x[1],
                     Description = x[2],
-                    Price = r.Next(1, 400) / Convert.ToDecimal(r.Next(1, 20))
+                    Price = Math.Round(r.Next(1, 400) / Convert.ToDecimal(r.Next(1, 20)),3)
                 }).ToList();
 
 
