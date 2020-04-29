@@ -23,20 +23,41 @@ namespace TinyCRMConsole
 
             var r = new Random();
 
-            var Data = File.ReadAllLines(path + filename)
+            var LoadedData = File.ReadAllLines(path + filename)
                 .Skip(1)
                 .Select(x => x.Split(';'))
-                .Select(x => new Product
-                {
-                    ProductId = x[0],
-                    Name = x[1],
-                    Description = x[2],
-                    Price = Math.Round(r.Next(1, 400) / Convert.ToDecimal(r.Next(1, 20)),3)
-                }).ToList();
+                .Distinct()
+                .ToList();
 
 
-            return Data;
+            var DataToObjects = LoadedData
+                  .Select(x => new Product
+                  {
+                     ProductId = x[0],
+                     Name = x[1],
+                     Description = x[2],
+                     Price = Math.Round(r.Next(1, 400) / Convert.ToDecimal(r.Next(1, 20)), 3)
+                  })
+                  .ToList();
 
+
+            return DataToObjects;
+        }
+        public static List<Product> ProductUniqueFilter(List<Product> givenData)
+        {
+            var data = givenData.GroupBy(d => d.ProductId)
+                .Select(d => d.First())
+                .ToList();
+
+            return data;
+        }
+        public override string ToString()
+        {
+            return 
+                $"Product ID = {this.ProductId } " +
+                $"Product Name = {this.Name} , " +
+                $"Product Description = {this.Description} , " +
+                $"Product Price = {this.Price} " + "\n";
         }
     }
 
