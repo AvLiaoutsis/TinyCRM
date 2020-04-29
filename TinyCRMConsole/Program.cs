@@ -6,14 +6,15 @@ namespace TinyCRMConsole
     {
         static void Main(string[] args)
         {
-            try
+            string startupPath = Environment.CurrentDirectory;
+            Console.WriteLine(startupPath);
+            var Products = Product.GetProductsFromCSV(@"Data\Products.csv");
+
+            foreach (var product in Products)
             {
-                var aLiaoutsis = new Customer("123124125");
+                Console.WriteLine(product.Price);
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"{ex.Message}");
-            }
+
         }
     }
 }
