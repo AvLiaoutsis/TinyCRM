@@ -36,7 +36,7 @@ namespace TinyCRMConsole
                      ProductId = x[0],
                      Name = x[1],
                      Description = x[2],
-                     Price = Math.Round(r.Next(1, 400) / Convert.ToDecimal(r.Next(1, 20)), 3)
+                     Price = (decimal)Math.Round(r.NextDouble() * 100 , 3)
                   })
                   .ToList();
 
