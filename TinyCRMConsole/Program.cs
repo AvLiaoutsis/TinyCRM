@@ -7,14 +7,21 @@ namespace TinyCRMConsole
         static void Main(string[] args)
         {
 
-            var products = Product.GetProductsFromCSV(@"\Data\Products.csv");
-
-            var uniqueProducts = Product.ProductUniqueFilter(products);
-
-            foreach (var product in uniqueProducts)
+            try
             {
-                Console.WriteLine(product);
+                var products = Product.GetProductsFromCSV(@"\Data\Products.csv");
+
+                var uniqueProducts = Product.ProductUniqueFilter(products);
+
+                uniqueProducts.ForEach(product => Console.WriteLine(product));
+            
             }
+            catch (Exception)
+            {
+                return;
+            }
+
+
 
         }
     }
