@@ -14,7 +14,12 @@ namespace TinyCRMConsole
         public Decimal Price { get; set; }
         public string Name { get; set; }
 
+        public List<Order> ListOfOrders {get;set;}
 
+        public Product()
+        {
+            ListOfOrders = new List<Order>();
+        }
 
         public static List<Product> GetProductsFromCSV(string filename)
         {
@@ -44,6 +49,7 @@ namespace TinyCRMConsole
 
             return data;
         }
+
         public override string ToString()
         {
             return 
