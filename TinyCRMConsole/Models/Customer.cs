@@ -10,12 +10,14 @@ namespace TinyCRMConsole.Models
 		public DateTime Created { get; set; }
 		public string FirstName { get; set; }
 		public string LastName { get; set; }
+		public string Address { get; set; }
+
 		public string Email { get; set; }
-		public string VatNumber { get; private set; }
+		public string VatNumber { get; set; }
 		public string Phone { get; set; }
-		public decimal TotalGross { get; private set; }
+		public decimal TotalGross { get; set; }
 		public bool IsActive { get; set; }
-		public int Age { get; set; }
+		public DateTime DateOfBirth { get; set; }
 		public List<Order> Orders { get; set; }
 
 		public Customer(string vatNumber)
@@ -28,8 +30,12 @@ namespace TinyCRMConsole.Models
 			VatNumber = vatNumber;
 			Created = DateTime.Now;
 		}
+		public Customer()
+		{
 
-		public Customer(string firstName, string lastName, string email, string vatNumber, string phone, decimal totalGross, bool isActive, int age)
+		}
+
+		public Customer(string firstName, string lastName, string email, string vatNumber, string phone, decimal totalGross, bool isActive, DateTime dateofbirth)
 		{
 			FirstName = firstName;
 			LastName = lastName;
@@ -38,7 +44,7 @@ namespace TinyCRMConsole.Models
 			Phone = phone;
 			TotalGross = totalGross;
 			IsActive = isActive;
-			Age = age;
+			DateOfBirth = dateofbirth;
 			Created = DateTime.Now;
 
 			Orders = new List<Order>();
@@ -51,7 +57,7 @@ namespace TinyCRMConsole.Models
 		}
 		public bool IsAdutlt()
 		{
-			return Age >= 18;
+			return DateOfBirth.Year - DateTime.Now.Year  >= 18;
 		}
 		public static Customer MostValuable(Customer customerA, Customer customerB)
 		{
