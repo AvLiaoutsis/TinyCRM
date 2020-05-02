@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TinyCRMConsole.Models;
 using TinyCRMConsole.Options;
 using TinyCRMConsole.Services;
 
@@ -27,7 +28,17 @@ namespace TinyCRMConsole
 
             Console.WriteLine("Id = " + customer.CustomerID +
                 " FirstName = " + customer.FirstName);
-            
+
+            Customer toFind = custCrud.GetCustomerById(100);
+
+            if(toFind != null)
+            {
+                Console.WriteLine("Id = " + toFind.CustomerID +
+                  " FirstName = " + toFind.FirstName);
+            }
+
+
+
         }
     }
 }

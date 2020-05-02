@@ -32,5 +32,14 @@ namespace TinyCRMConsole.Services
 
             return customer;
         }
+
+        public Customer GetCustomerById(int id)
+        {
+            using AppDbContext dbContext = new AppDbContext();
+
+            var customer = dbContext.Customers.Find(id);
+
+            return customer;
+        }
     }
 }
