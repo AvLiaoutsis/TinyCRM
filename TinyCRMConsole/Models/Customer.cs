@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TinyCRMConsole
+namespace TinyCRMConsole.Models
 {
-	class Customer
+	public class Customer
 	{
+		public int CustomerID { get; set; }
 		public DateTime Created { get; set; }
 		public string FirstName { get; set; }
 		public string LastName { get; set; }

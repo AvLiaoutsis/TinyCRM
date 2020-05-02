@@ -5,20 +5,20 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace TinyCRMConsole
+namespace TinyCRMConsole.Models
 {
-    class Product
+    public class Product
     {
         public string ProductId { get; set; }
         public string Description { get; set; }
         public Decimal Price { get; set; }
         public string Name { get; set; }
 
-        public List<Order> ListOfOrders {get;set;}
+        public List<OrderProduct> OrderProducts {get;set;}
 
         public Product()
         {
-            ListOfOrders = new List<Order>();
+            OrderProducts = new List<OrderProduct>();
         }
 
         public static List<Product> GetProductsFromCSV(string filename)
