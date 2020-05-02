@@ -8,7 +8,7 @@ namespace TinyCRMConsole.Models
     public class Order
     {
         public int OrderId { get; set; } 
-        public string DeliveryAddress { get; private set; }
+        public string DeliveryAddress { get; set; }
         public Decimal TotalAmmount { get; set; }
 
         public List<OrderProduct> OrderProducts { get; set; }

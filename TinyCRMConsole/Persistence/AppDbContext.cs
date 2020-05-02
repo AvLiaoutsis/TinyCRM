@@ -10,7 +10,7 @@ namespace TinyCRMConsole.Persistence
     {
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Order> Orders { get; set; }
-        public DbSet<Order> Order { get; set; }
+        public DbSet<Product> Products { get; set; }
         public DbSet<OrderProduct> OrderProducts { get; set; }
 
         private readonly string connectionString = @"Data Source=AVRAAM-LAPTOP\SQLEXPRESS;Initial Catalog=TinyCRM;Integrated Security=True";
