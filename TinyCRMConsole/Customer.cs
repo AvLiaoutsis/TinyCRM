@@ -6,16 +6,17 @@ namespace TinyCRMConsole
 {
 	class Customer
 	{
+		public int Id { get; set; }
 		public DateTime Created { get; set; }
 		public string FirstName { get; set; }
 		public string LastName { get; set; }
 		public string Email { get; set; }
-		public string VatNumber { get; private set; }
+		public string VatNumber { get;  set; }
 		public string Phone { get; set; }
-		public decimal TotalGross { get; private set; }
+		public decimal TotalGross { get; set; }
 		public bool IsActive { get; set; }
 		public int Age { get; set; }
-		public List<Order> Orders { get; set; }
+		//public List<Order> Orders { get; set; }
 
 		public Customer(string vatNumber)
 		{
@@ -40,10 +41,14 @@ namespace TinyCRMConsole
 			Age = age;
 			Created = DateTime.Now;
 
-			Orders = new List<Order>();
+			//Orders = new List<Order>();
 		}
 
-		public bool IsValidVatNumber(string vatNumber)
+        public Customer()
+        {
+        }
+
+        public bool IsValidVatNumber(string vatNumber)
 		{
 			return
 				!string.IsNullOrWhiteSpace(vatNumber) && vatNumber.Length == 9;
@@ -52,16 +57,16 @@ namespace TinyCRMConsole
 		{
 			return Age >= 18;
 		}
-		public static Customer MostValuable(Customer customerA, Customer customerB)
-		{
-			decimal totalSpendingsA = 0;
-			decimal totalSpengingsB = 0;
+		//public static Customer MostValuable(Customer customerA, Customer customerB)
+		//{
+		//	decimal totalSpendingsA = 0;
+		//	decimal totalSpengingsB = 0;
 
-			customerA.Orders.ForEach(o => totalSpendingsA += o.TotalAmmount);
-			customerB.Orders.ForEach(o => totalSpengingsB += o.TotalAmmount);
+		//	customerA.Orders.ForEach(o => totalSpendingsA += o.TotalAmmount);
+		//	customerB.Orders.ForEach(o => totalSpengingsB += o.TotalAmmount);
 
-			return totalSpendingsA > totalSpengingsB ? customerA : customerB;
-		}
+		//	return totalSpendingsA > totalSpengingsB ? customerA : customerB;
+		//}
 		public override string ToString()
 		{
 			return FirstName + " " + LastName;

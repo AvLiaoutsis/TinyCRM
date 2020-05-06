@@ -11,24 +11,24 @@ namespace TinyCRMConsole
         public string DeliveryAddress { get; private set; }
         public Decimal TotalAmmount { get; set; }
 
-        public List<Product> Products { get; set; }
+        //public List<Product> Products { get; set; }
 
         public Order()
         {
-            Products = new List<Product>();
+            //Products = new List<Product>();
         }
 
-        public void CalculateAmmount()
-        {
-            decimal totalvalue = 0;
+        //public void CalculateAmmount()
+        //{
+        //    decimal totalvalue = 0;
 
-            foreach (var product in Products)
-            {
-                totalvalue += product.Price;
-            }
+        //    foreach (var product in Products)
+        //    {
+        //        totalvalue += product.Price;
+        //    }
 
-            TotalAmmount = totalvalue;
-        }
+        //    TotalAmmount = totalvalue;
+        //}
 
 
     }

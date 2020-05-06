@@ -9,16 +9,17 @@ namespace TinyCRMConsole
 {
     class Product
     {
-        public string ProductId { get; set; }
+        public int ProductId { get; set; }
         public string Description { get; set; }
         public Decimal Price { get; set; }
         public string Name { get; set; }
+        public string ProductCategory { get; set; }
 
-        public List<Order> ListOfOrders {get;set;}
+        //public List<Order> ListOfOrders {get;set;}
 
         public Product()
         {
-            ListOfOrders = new List<Order>();
+            //ListOfOrders = new List<Order>();
         }
 
         public static List<Product> GetProductsFromCSV(string filename)
@@ -31,7 +32,7 @@ namespace TinyCRMConsole
                   .Select(x => x.Split(';'))
                   .Select(x => new Product
                   {
-                     ProductId = x[0],
+                     ProductId = int.Parse(x[0]),
                      Name = x[1],
                      Description = x[2],
                      Price = (decimal)Math.Round(new Random().NextDouble() * 100 , 3)
