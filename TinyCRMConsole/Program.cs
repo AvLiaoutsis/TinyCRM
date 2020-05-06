@@ -15,7 +15,7 @@ namespace TinyCRMConsole
                 .Where(c => c.FirstName.Contains(options.FirstName) ||
                 c.LastName.Contains(options.LastName) ||
                 c.VatNumber.Contains(options.VatNumber) ||
-                (options.CreatedTo < c.Created && options.CreateFrom < c.Created) ||
+                (options.CreatedTo < c.Created && options.CreateFrom > c.Created) ||
                 c.Id.ToString().Contains(options.CustomerId.ToString()))
                 .Take(500)
                 .ToList();
