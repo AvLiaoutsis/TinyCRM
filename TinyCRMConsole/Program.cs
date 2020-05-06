@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Options;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,100 +7,55 @@ namespace TinyCRMConsole
 {
     class Program
     {
-        static void CustomAdd(string key, int count, Dictionary<string, int> mydict)
+        static List<Customer> SearchCustomers(CustomerOptions options)
         {
-            if (mydict.TryAdd(key, count))
-            {
-                if (!mydict.ContainsKey(key))
-                {
-                    mydict.Add(key, count);
+            var db = new TinyCrmDbContext();
 
-                }
-            }
+            var customerList = db.Set<Customer>()
+                .Where(c => c.FirstName.Contains(options.FirstName) ||
+                c.LastName.Contains(options.LastName) ||
+                c.VatNumber.Contains(options.VatNumber) ||
+                (options.CreatedTo < c.Created && options.CreateFrom < c.Created) ||
+                c.Id.ToString().Contains(options.CustomerId.ToString()))
+                .Take(500)
+                .ToList();
+
+            return customerList;
         }
-        static List<string> MostSoldProducts(List<Order> orders)
+
+        static List<Product> SearchProducts(ProductOptions options)
         {
-            var productBySales = new Dictionary<string, int>();
+            var db = new TinyCrmDbContext();
 
-            foreach (var order in orders)
-            {
-                var countPerProduct = order.Products.GroupBy(p => p.Name).Select(g => new { g.Key, Count = g.Count() }).ToList();
-
-                countPerProduct.ForEach(x => CustomAdd(x.Key,x.Count, productBySales));
-  
-            }
-
-            var top5products = productBySales.OrderBy(x => x.Value).Take(5).Select(x => x.Key).ToList();
-
-            return top5products;
+            var customerList = db.Set<Product>()
+                .Where(c => c.ProductId.ToString().Contains(options.ProductId.ToString()) ||
+                (c.Price > options.PriceFrom && c.Price < options.PriceTo) ||
+                options.Categories.Any(ca => ca.Contains(c.ProductCategory)))
+                .Take(500)
+                .ToList();
                 
+
+            return customerList;
         }
 
         static void Main(string[] args)
         {
-            List<Product> products;
-            List<Order> totalOrders = new List<Order>();
 
+            var db = new TinyCrmDbContext();
 
-            try
+            // Insert
+            var customer = new Customer()
             {
-                products = Product.GetProductsFromCSV(@"\Data\Products.csv");
+                FirstName = "Avraam",
+                LastName = "Liaoutsis",
+                Email = "Av.liaoutsis@outlook.com"
+            };
 
-            
-            }
-            catch (Exception)
-            {
-                return;
-            }
-
-
-            var uniqueProducts = Product.ProductUniqueFilter(products);
-
-            //uniqueProducts.ForEach(product => Console.WriteLine(product));
-
-            //1st Customer
-            var customerA = new Customer("Avraam","Liaoutsis","Av.liaoutsis@outlook.com","123456789","6979090123",0,true,24);
-
-            //2nd Customer
-            var customerB = new Customer("Alex", "Liaoutsis", "Al.liaoutsis@outlook.com", "123456788", "6979090123", 0, true, 24);
-
-            //Create first order for Customer A
-            var orderA = new Order();
-
-            //10 random products for first Order
-            var randomAProducts = uniqueProducts.OrderBy(x => new Random().Next()).Take(10).ToList();
-
-            orderA.Products.AddRange(randomAProducts);
-            orderA.CalculateAmmount();
-
-            //Assign to Customer A
-
-            customerA.Orders.Add(orderA);
-            totalOrders.Add(orderA);
-
-            //Create first order for Customer B
-
-            var orderB = new Order();
-
-            //10 random products for first Order
-            var randomBProducts = uniqueProducts.OrderBy(x => new Random().Next()).Take(10).ToList();
-
-            orderB.Products.AddRange(randomBProducts);
-            orderB.CalculateAmmount();
-
-            //Assign to Customer B
-
-            customerB.Orders.Add(orderB);
-            totalOrders.Add(orderB);
+            db.Add(customer);
+            db.SaveChanges();
 
 
 
-
-            Console.WriteLine("The most valuable customer is " + Customer.MostValuable(customerA,customerB));
-
-            Console.WriteLine("The most Sold orders are the following :" );
-
-            MostSoldProducts(totalOrders).ForEach(o => Console.WriteLine(o));
         }
     }
 }
