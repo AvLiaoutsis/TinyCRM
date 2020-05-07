@@ -13,7 +13,7 @@ namespace TinyCRMConsole
         public string Description { get; set; }
         public Decimal Price { get; set; }
         public string Name { get; set; }
-        public string ProductCategory { get; set; }
+        public ProductCategory Category { get; set; }
 
         //public List<Order> ListOfOrders {get;set;}
 

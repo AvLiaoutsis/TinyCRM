@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Update;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,55 +9,126 @@ namespace TinyCRMConsole
 {
     class Program
     {
-        static List<Customer> SearchCustomers(CustomerOptions options)
+
+        static IQueryable<Customer> SearchCustomers(SearchCustomerOptions options,TinyCrmDbContext db)
         {
-            var db = new TinyCrmDbContext();
+            if (options == null)
+            {
+                throw new ArgumentNullException("Null options");
+            }
 
-            var customerList = db.Set<Customer>()
-                .Where(c => c.FirstName.Contains(options.FirstName) ||
-                c.LastName.Contains(options.LastName) ||
-                c.VatNumber.Contains(options.VatNumber) ||
-                (options.CreatedTo < c.Created && options.CreateFrom > c.Created) ||
-                c.Id.ToString().Contains(options.CustomerId.ToString()))
-                .Take(500)
-                .ToList();
 
-            return customerList;
+
+                var customerList = db.Set<Customer>()
+                    .Where(c => c.FirstName.Contains(options.FirstName) ||
+                    c.LastName.Contains(options.LastName) ||
+                    c.VatNumber.Contains(options.VatNumber) ||
+                    (options.CreatedTo >= c.Created && options.CreateFrom >= c.Created) ||
+                    c.Id.ToString().Contains(options.CustomerId.ToString()))
+                    .Take(500);
+
+                return customerList;
+
+            
         }
 
-        static List<Product> SearchProducts(ProductOptions options)
+        static IQueryable<Product> SearchProducts(ProductOptions options)
         {
-            var db = new TinyCrmDbContext();
 
-            var customerList = db.Set<Product>()
+            using (var db = new TinyCrmDbContext())
+            {
+                var customerList = db.Set<Product>()
                 .Where(c => c.ProductId.ToString().Contains(options.ProductId.ToString()) ||
-                (c.Price > options.PriceFrom && c.Price < options.PriceTo) ||
-                options.Categories.Any(ca => ca.Contains(c.ProductCategory)))
-                .Take(500)
-                .ToList();
-                
+                (c.Price >= options.PriceFrom && c.Price <= options.PriceTo))
+                .Take(500);
 
-            return customerList;
+
+                return customerList;
+            }
         }
 
         static void Main(string[] args)
         {
 
-            var db = new TinyCrmDbContext();
-
-            // Insert
-            var customer = new Customer()
+            using (var db = new TinyCrmDbContext())
             {
-                FirstName = "Avraam",
-                LastName = "Liaoutsis",
-                Email = "Av.liaoutsis@outlook.com"
-            };
 
-            db.Add(customer);
-            db.SaveChanges();
+                // Insert
+                //var customer = new Customer()
+                //{
+                //    FirstName = "Avraam",
+                //    LastName = "Liaoutsis",
+                //    Email = "Av.liaoutsis@outlook.com"
+                //};
+
+                //db.Add(customer);
+                //db.SaveChanges();
+
+                var firstOptionCustomer = new SearchCustomerOptions()
+                {
+                    FirstName = "Avraam",
+
+                };
+
+                var secondOptionCustomer = new SearchCustomerOptions()
+                {
+                    FirstName = "Avraam"
+
+                };
+
+
+                var thirdOptionCustomer = new SearchCustomerOptions()
+                {
+                    FirstName = "Avraam"
+
+                };
 
 
 
+
+                var product = new Product()
+                {
+                    Category = ProductCategory.Mobiles,
+                    Name = "Iphone 15",
+                    Price = 1500m
+                };
+
+                db.Add(product);
+                db.SaveChanges();
+
+                // one to many 
+                var customerWithOrders = new Customer()
+                {
+                    FirstName = "Avraam",
+                    LastName = "Liaoutsis",
+                    Email = "Av.liaoutsis@outlook.com"
+
+                };
+
+
+                customerWithOrders.Orders.Add
+                (
+                    new Order()
+                    {
+                        DeliveryAddress = " ATHINA",
+                    }
+                 );
+
+                db.Add(customerWithOrders);
+                db.SaveChanges();
+
+                // Select customer with orders
+                var customer = SearchCustomers(new SearchCustomerOptions()
+                {
+                    CustomerId = 18,
+
+                },db)
+                .Include(c => c.Orders)
+                .SingleOrDefault();
+
+                db.Dispose();
+            }
         }
+
     }
 }

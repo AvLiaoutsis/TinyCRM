@@ -8,14 +8,14 @@ namespace TinyCRMConsole
     class Order
     {
         public int OrderId { get; set; } 
-        public string DeliveryAddress { get; private set; }
+        public string DeliveryAddress { get;  set; }
         public Decimal TotalAmmount { get; set; }
-
+        public DateTimeOffset Created { get; set; }
         //public List<Product> Products { get; set; }
 
         public Order()
         {
-            //Products = new List<Product>();
+            Created = DateTimeOffset.Now;
         }
 
         //public void CalculateAmmount()

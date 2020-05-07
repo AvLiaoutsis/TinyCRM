@@ -16,7 +16,8 @@ namespace TinyCRMConsole
 		public decimal TotalGross { get; set; }
 		public bool IsActive { get; set; }
 		public int Age { get; set; }
-		//public List<Order> Orders { get; set; }
+		
+		public List<Order> Orders { get; set; }
 
 		public Customer(string vatNumber)
 		{
@@ -27,6 +28,7 @@ namespace TinyCRMConsole
 
 			VatNumber = vatNumber;
 			Created = DateTime.Now;
+			Orders = new List<Order>();
 		}
 
 		public Customer(string firstName, string lastName, string email, string vatNumber, string phone, decimal totalGross, bool isActive, int age)
@@ -46,9 +48,11 @@ namespace TinyCRMConsole
 
         public Customer()
         {
-        }
+			Orders = new List<Order>();
 
-        public bool IsValidVatNumber(string vatNumber)
+		}
+
+		public bool IsValidVatNumber(string vatNumber)
 		{
 			return
 				!string.IsNullOrWhiteSpace(vatNumber) && vatNumber.Length == 9;
