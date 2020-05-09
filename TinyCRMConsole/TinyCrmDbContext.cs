@@ -34,6 +34,11 @@ namespace TinyCRMConsole
             modelBuilder
                 .Entity<Order>()
                 .ToTable("Order");
+
+            modelBuilder
+                .Entity<OrderProduct>()
+                .ToTable("OrderProduct")
+                .HasKey(op => new { op.ProductId, op.OrderId });
         }
     }
 }

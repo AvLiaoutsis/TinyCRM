@@ -7,9 +7,9 @@ using System.Text;
 
 namespace TinyCRMConsole
 {
-    class Product
+    public class Product
     {
-        public int ProductId { get; set; }
+        public string ProductId { get; set; }
         public string Description { get; set; }
         public Decimal Price { get; set; }
         public string Name { get; set; }
@@ -32,7 +32,7 @@ namespace TinyCRMConsole
                   .Select(x => x.Split(';'))
                   .Select(x => new Product
                   {
-                     ProductId = int.Parse(x[0]),
+                     ProductId = x[0],
                      Name = x[1],
                      Description = x[2],
                      Price = (decimal)Math.Round(new Random().NextDouble() * 100 , 3)
