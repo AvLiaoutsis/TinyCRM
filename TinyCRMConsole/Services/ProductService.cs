@@ -25,7 +25,8 @@ namespace TinyCRMConsole
             {
                 Name = options.Name,
                 Price = options.Price,
-                ProductId = options.ProductId
+                ProductId = options.ProductId,
+                Category = options.Category
             };
 
             _context.Add(product);
@@ -53,10 +54,7 @@ namespace TinyCRMConsole
                 query = query.Where(c => c.Name == options.Name);
             }
 
-            if (options != null)
-            {
-                query = query.Where(c => c.ProductId == options.ProductId);
-            }
+
 
             if (options != null)
             {
@@ -66,6 +64,11 @@ namespace TinyCRMConsole
             if (options != null)
             {
                 query = query.Where(c => c.Price >= options.MinPrice && c.Price <= options.MaxPrice);
+            }
+
+            if (options != null)
+            {
+                query = query.Where(c => c.ProductId == options.ProductId);
             }
 
             query = query.Take(500);

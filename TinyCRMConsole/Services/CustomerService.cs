@@ -14,6 +14,7 @@ namespace TinyCRMConsole
         {
             _context = context;
         }
+
         public Customer CreateCustomer(CustomerOptions options)
         {
             if(options == null)
@@ -37,6 +38,7 @@ namespace TinyCRMConsole
 
             return null;
         }
+
         public IQueryable<Customer> SearchCustomers(CustomerOptions options)
         {
             if (options == null)
@@ -72,6 +74,7 @@ namespace TinyCRMConsole
 
             return query;
         }
+
         public Customer SearchCustomerById(int id)
         {
             var existingCustomer = SearchCustomers(new CustomerOptions()

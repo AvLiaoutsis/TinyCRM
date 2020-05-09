@@ -11,6 +11,6 @@ namespace TinyCRMConsole
         public decimal Price { get; set; }
         public decimal MaxPrice { get; set; }
         public decimal MinPrice { get; set; }
-        public List<ProductCategory> Categories { get; set; }
+        public ProductCategory Category { get; set; }
     }
 }

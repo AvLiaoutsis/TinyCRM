@@ -19,20 +19,7 @@ namespace TinyCRMConsole
         {
             Created = DateTimeOffset.Now;
             OrderProducts = new List<OrderProduct>();
+        
         }
-
-        //public void CalculateAmmount()
-        //{
-        //    decimal totalvalue = 0;
-
-        //    foreach (var product in Products)
-        //    {
-        //        totalvalue += product.Price;
-        //    }
-
-        //    TotalAmmount = totalvalue;
-        //}
-
-
     }
 }

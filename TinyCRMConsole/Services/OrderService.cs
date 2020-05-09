@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,6 +18,7 @@ namespace TinyCRMConsole
             _customerService = customerService;
             _productService = productService;
         }
+
         public Order CreateOrder(OrderOptions options)
         {
             if (options == null)
@@ -42,6 +44,7 @@ namespace TinyCRMConsole
                         Product = product,
                         ProductId = product.ProductId
                     });
+                    order.TotalAmmount += product.Price;
                 }
             }
 
@@ -72,22 +75,9 @@ namespace TinyCRMConsole
 
             var query = _context
                 .Set<Order>()
+                .Where(o => o.CustomerId == options.CustomerId)
+                .Include(s=>s.OrderProducts)
                 .AsQueryable();
-
-            if (options != null)
-            {
-                query = query.Where(c => c.OrderId == options.OrderId);
-            }
-
-            if (options != null)
-            {
-                query = query.Where(c => c.CustomerId == options.CustomerId);
-            }
-
-            if (options != null)
-            {
-                query = query.Where(c => c.DeliveryAddress == options.DeliveryAddress);
-            }
 
             query = query.Take(500);
 
