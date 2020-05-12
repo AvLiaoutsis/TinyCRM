@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using TinyCrm.Core.Model;
 
-namespace TinyCRMConsole
+namespace TinyCrm.Core.Services.Options
 {
     public class ProductOptions
     {

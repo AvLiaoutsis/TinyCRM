@@ -3,8 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
+using TinyCrm.Core.Model;
 
-namespace TinyCRMConsole
+namespace TinyCrm.Core.Data
 {
     public class TinyCrmDbContext : DbContext
     {

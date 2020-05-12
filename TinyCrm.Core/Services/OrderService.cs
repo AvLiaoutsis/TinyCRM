@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using TinyCrm.Core.Data;
+using TinyCrm.Core.Model;
+using TinyCrm.Core.Services.Options;
 
-namespace TinyCRMConsole
+namespace TinyCrm.Core.Services
 {
     class OrderService : IOrderService
     {

@@ -3,25 +3,23 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using TinyCRMConsole;
+using TinyCrm.Core.Data;
 
-namespace TinyCRMConsole.Migrations
+namespace TinyCrm.Core.Migrations
 {
     [DbContext(typeof(TinyCrmDbContext))]
-    [Migration("20200509133600_AfterServicesMigration")]
-    partial class AfterServicesMigration
+    partial class TinyCrmDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.3")
+                .HasAnnotation("ProductVersion", "3.1.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("TinyCRMConsole.Customer", b =>
+            modelBuilder.Entity("TinyCrm.Core.Model.Customer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -60,7 +58,7 @@ namespace TinyCRMConsole.Migrations
                     b.ToTable("Customer");
                 });
 
-            modelBuilder.Entity("TinyCRMConsole.Order", b =>
+            modelBuilder.Entity("TinyCrm.Core.Model.Order", b =>
                 {
                     b.Property<int>("OrderId")
                         .ValueGeneratedOnAdd()
@@ -86,7 +84,7 @@ namespace TinyCRMConsole.Migrations
                     b.ToTable("Order");
                 });
 
-            modelBuilder.Entity("TinyCRMConsole.OrderProduct", b =>
+            modelBuilder.Entity("TinyCrm.Core.Model.OrderProduct", b =>
                 {
                     b.Property<string>("ProductId")
                         .HasColumnType("nvarchar(450)");
@@ -101,7 +99,7 @@ namespace TinyCRMConsole.Migrations
                     b.ToTable("OrderProduct");
                 });
 
-            modelBuilder.Entity("TinyCRMConsole.Product", b =>
+            modelBuilder.Entity("TinyCrm.Core.Model.Product", b =>
                 {
                     b.Property<string>("ProductId")
                         .HasColumnType("nvarchar(450)");
@@ -123,24 +121,24 @@ namespace TinyCRMConsole.Migrations
                     b.ToTable("Product");
                 });
 
-            modelBuilder.Entity("TinyCRMConsole.Order", b =>
+            modelBuilder.Entity("TinyCrm.Core.Model.Order", b =>
                 {
-                    b.HasOne("TinyCRMConsole.Customer", null)
+                    b.HasOne("TinyCrm.Core.Model.Customer", null)
                         .WithMany("Orders")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("TinyCRMConsole.OrderProduct", b =>
+            modelBuilder.Entity("TinyCrm.Core.Model.OrderProduct", b =>
                 {
-                    b.HasOne("TinyCRMConsole.Order", "Order")
+                    b.HasOne("TinyCrm.Core.Model.Order", "Order")
                         .WithMany("OrderProducts")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TinyCRMConsole.Product", "Product")
+                    b.HasOne("TinyCrm.Core.Model.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)

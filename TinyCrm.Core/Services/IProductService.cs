@@ -1,6 +1,8 @@
 ﻿using System.Linq;
+using TinyCrm.Core.Model;
+using TinyCrm.Core.Services.Options;
 
-namespace TinyCRMConsole
+namespace TinyCrm.Core.Services
 {
     public interface IProductService
     {

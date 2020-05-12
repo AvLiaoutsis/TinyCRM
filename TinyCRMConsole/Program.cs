@@ -4,6 +4,9 @@ using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TinyCrm.Core.Data;
+using TinyCrm.Core.Services.Options;
+using TinyCrm.Core.Services;
 
 namespace TinyCRMConsole
 {
@@ -13,10 +16,7 @@ namespace TinyCRMConsole
         {
             using (var context = new TinyCrmDbContext())
             {
-                ICustomerService customerService = new CustomerService(context);
-                IProductService productService = new ProductService(context);
-                IOrderService orderService = new OrderService(context,customerService,productService);
-
+                var customerService = new CustomerService(context);
 
                 var newCustomer = customerService.CreateCustomer(new CustomerOptions()
                 {
@@ -27,37 +27,38 @@ namespace TinyCRMConsole
                 });
 
 
-                var newProduct = productService.Create(new
-                    ProductOptions()
-                {
-                    Name = "Mac os",
-                    Category = ProductCategory.Laptops,
-                    Price = 500,
-                    ProductId = "ASDASD1-242"
-                }
-                );
+                //var newProduct = productService.Create(new
+                //    ProductOptions()
+                //{
+                //    Name = "Mac os",
+                //    Category = ProductCategory.Laptops,
+                //    Price = 500,
+                //    ProductId = "ASDASD1-242"
+                //}
+                //);
 
-                var productsToBuy = new List<Product>();
-                var productsIdsToBuy = new List<string>();
+                //var productsToBuy = new List<Product>();
+                //var productsIdsToBuy = new List<string>();
 
-                productsToBuy.Add(newProduct);
-                productsIdsToBuy.Add(newProduct.ProductId);
+                //productsToBuy.Add(newProduct);
+                //productsIdsToBuy.Add(newProduct.ProductId);
 
 
-                var newOrder = orderService.CreateOrder(new OrderOptions() 
-                {
-                    CustomerId = newCustomer.Id,
-                    ProductIds = productsIdsToBuy
-                });
+                //var newOrder = orderService.CreateOrder(new OrderOptions()
+                //{
+                //    CustomerId = newCustomer.Id,
+                //    ProductIds = productsIdsToBuy
+                //});
 
-                Console.WriteLine(newOrder);
+                //Console.WriteLine(newOrder);
 
 
 
                 context.Dispose();
             }
         }
-        
+
 
     }
 }
+

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace TinyCRMConsole
+namespace TinyCrm.Core.Model
 {
     public class Product
     {

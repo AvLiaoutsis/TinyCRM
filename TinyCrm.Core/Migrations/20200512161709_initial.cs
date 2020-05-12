@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace TinyCRMConsole.Migrations
+namespace TinyCrm.Core.Migrations
 {
-    public partial class AfterServicesMigration : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
