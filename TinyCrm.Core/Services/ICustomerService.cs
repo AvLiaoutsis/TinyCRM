@@ -16,7 +16,7 @@ namespace TinyCrm.Core.Services
         IQueryable<Customer> SearchCustomers(CustomerOptions options);
 
         public Customer SearchCustomerById(int id);
-
+        public List<Customer> GetAll();
 
     }
 }

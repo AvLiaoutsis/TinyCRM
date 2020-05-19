@@ -25,6 +25,10 @@ namespace TinyCrm.Core.Services
                 return null;
             }
 
+            if (string.IsNullOrWhiteSpace(options.VatNumber))
+            {
+                return null;
+            }
             var customer = new Customer()
             {
                 LastName = options.LastName,
@@ -119,6 +123,13 @@ namespace TinyCrm.Core.Services
 
 
             _context.SaveChanges();
+        }
+
+        public List<Customer> GetAll()
+        {
+            var customers = _context.Set<Customer>().ToList();
+
+            return customers;
         }
     }
 }
